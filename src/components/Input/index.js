@@ -8,15 +8,17 @@ type InputProps = {
   value: string,
   onChange: (SyntheticInputEvent<HTMLInputElement>) => void,
   placeholder?: string,
-  status?: "idle" | "error"
+  error?: boolean
 }
 
 const Input = ({
-  value, placeholder, onChange, status,
+  value, placeholder, onChange, error,
 }: InputProps) => {
   return (
     <input
-      className={cx('input', `input_${status}`)}
+      className={cx('input', {
+        input_error: error,
+      })}
       placeholder={placeholder}
       onChange={onChange}
       value={value}
@@ -26,7 +28,7 @@ const Input = ({
 
 Input.defaultProps = {
   placeholder: '',
-  status: 'idle',
+  error: false,
 };
 
 export default Input;
