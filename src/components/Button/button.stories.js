@@ -10,4 +10,4 @@ export default {
 };
 
 export const Default = () => <Button onClick={action('click')}>Click me</Button>;
-export const Disabled = () => <Button disabled onClick={action('click')}>Click me</Button>;
+export const Disabled = () => <Button disabled onClick={action('click')}>Can&apos;t click me?</Button>;

@@ -11,5 +11,5 @@ export default {
 };
 
 export const Default = () => <Input onChange={action('changed')} value={text('value', 'idle')} />;
-export const WithPlaceholder = () => <Input placeholder="City" onChange={action('changed')} value="" />;
+export const WithPlaceholder = () => <Input placeholder="I'm placeholder" onChange={action('changed')} value="" />;
 export const ErrorState = () => <Input status="error" placeholder="City" onChange={action('changed')} value="with error" />;
