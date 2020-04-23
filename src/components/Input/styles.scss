@@ -9,6 +9,10 @@
   outline: none;
   border: 1px solid transparent;
   font-weight: 500;
+
+  &::placeholder {
+    color: $grey-800;
+  }
   @include default-transition(all);
 
   background: $grey-200;
@@ -22,6 +26,7 @@
     background: rgba($danger-color, .1);
     &:focus {
       border-color: rgba($danger-color, .4);
+      background: rgba($danger-color, .1);
       box-shadow: none;
     }
   }
