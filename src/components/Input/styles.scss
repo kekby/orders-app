@@ -24,6 +24,9 @@
   &_error {
     color: $danger-color;
     background: rgba($danger-color, .1);
+    &::placeholder {
+      color: $danger-color;
+    }
     &:focus {
       border-color: rgba($danger-color, .4);
       background: rgba($danger-color, .1);

@@ -2,8 +2,12 @@
 
 .select {
   appearance: none;
+
+  &_empty_value {
+    color: $grey-800;
+  }
 }
 
-.select_empty_value {
-  color: $grey-800;
+.input_error.select_empty_value {
+  color: $danger-color;
 }

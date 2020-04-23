@@ -24,13 +24,13 @@ const Select = ({
   return (
     <select
       className={cx('input', 'select', {
-        input_error: error,
         select_empty_value: !value,
+        input_error: error,
       })}
       onChange={onChange}
       value={value}
     >
-      <option value="" disabled selected>{placeholder}</option>
+      <option value="" disabled default>{placeholder}</option>
       {options.map((o) => <option value={o.value}>{o.label}</option>)}
     </select>
   );
