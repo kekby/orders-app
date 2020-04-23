@@ -2,11 +2,24 @@ module.exports = {
   extends: [
     'airbnb',
     'airbnb/hooks',
+    "plugin:flowtype/recommended"
   ],
   parser: 'babel-eslint',
   rules: {
     'react/jsx-filename-extension': 0,
+    'arrow-body-style': 0
   },
+  overrides: [
+    {
+      files: ['src/**/*.stories.js'],
+      rules: {
+        'import/no-extraneous-dependencies': 0
+      },
+    },
+  ],
+  plugins: [
+    'flowtype'
+  ],
   env: {
     browser: true
   },
