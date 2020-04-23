@@ -1,0 +1,26 @@
+@import "../../assets/variables.scss";
+@import "../../assets/mixins.scss";
+
+.button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  background: $danger-color;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  font-size: inherit;
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  @include default-transition(all);
+
+  &:hover {
+    background: lighten($danger-color, 5);
+  }
+
+  &:disabled {
+    background: $grey-400;
+    cursor: not-allowed;
+  }
+}
