@@ -1,0 +1,30 @@
+@import "../../assets/mixins.scss";
+@import "../../assets/variables.scss";
+
+.input {
+  border: none;
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-size: 1.6rem;
+  width: 100%;
+  outline: none;
+  border: 1px solid transparent;
+  @include default-transition(all);
+
+  &_idle {
+    background: $grey-200;
+    &:focus {
+      background: white;
+      border-color: $grey-400;
+      box-shadow: 0 2px 8px 0 $grey-400;
+    }
+  }
+
+  &_error {
+    color: $danger-color;
+    background: rgba($danger-color, .1);
+    &:focus {
+      border-color: rgba($danger-color, .4);
+    }
+  }
+}

@@ -1,23 +1,32 @@
 // @flow
 
 import React from 'react';
+import cx from 'classnames';
+import './styles.scss';
 
 type InputProps = {
   value: string,
   onChange: (SyntheticInputEvent<HTMLInputElement>) => void,
-  placeholder?: string
+  placeholder?: string,
+  status?: "idle" | "error"
 }
 
-const Input = ({ value, placeholder, onChange }: InputProps) => {
+const Input = ({
+  value, placeholder, onChange, status,
+}: InputProps) => {
   return (
-    <div className="input">
-      <input placeholder={placeholder} onChange={onChange} value={value} />
-    </div>
+    <input
+      className={cx('input', `input_${status}`)}
+      placeholder={placeholder}
+      onChange={onChange}
+      value={value}
+    />
   );
 };
 
 Input.defaultProps = {
   placeholder: '',
+  status: 'idle',
 };
 
 export default Input;
