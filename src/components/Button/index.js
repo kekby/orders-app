@@ -9,7 +9,7 @@ import './styles.scss';
 type ButtonProps = {
   children: React$Node,
   type?: "button" | "submit",
-  onClick?: () => void,
+  onClick?: (string) => void,
   disabled?: boolean
 }
 

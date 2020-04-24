@@ -1,13 +1,16 @@
 [ignore]
-
+.*/build/.*
+.*/src/serviceWorker.js*
 [include]
 
 [libs]
 
 [lints]
-
+all=warn
+untyped-type-import=error
 [options]
 module.file_ext=.scss
 module.file_ext=.css
+module.file_ext=.js
 module.name_mapper='^\([^\.].*\)$' -> '<PROJECT_ROOT>/src/\1'
 [strict]
