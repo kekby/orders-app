@@ -4,7 +4,7 @@ import React from 'react';
 import cx from 'classnames';
 import './styles.scss';
 
-type InputProps = {
+export type InputProps = {
   value: string,
   onChange: (SyntheticInputEvent<HTMLInputElement>) => void,
   placeholder?: string,
