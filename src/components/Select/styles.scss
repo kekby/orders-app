@@ -1,9 +1,27 @@
 @import "../../assets/variables.scss";
 
 .select {
+  position: relative;
+}
+
+.select__arrow {
+  position: absolute;
+  right: 0px;
+  width: 24px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.select__input {
   appearance: none;
 
-  &_empty_value {
+  &_empty {
     color: $grey-800;
   }
 }
