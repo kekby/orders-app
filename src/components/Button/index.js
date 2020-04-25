@@ -9,8 +9,9 @@ import './styles.scss';
 type ButtonProps = {
   children: React$Node,
   type?: "button" | "submit",
-  onClick?: (string) => void,
-  disabled?: boolean
+  onClick?: () => void,
+  disabled?: boolean,
+  className?: string
 }
 
 const Button = ({
@@ -18,12 +19,13 @@ const Button = ({
   type = 'button',
   onClick,
   disabled,
+  className,
 }: ButtonProps) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={cx('button')}
+      className={cx('button', className)}
       disabled={disabled}
     >
       {children}
@@ -35,6 +37,7 @@ Button.defaultProps = {
   type: 'button',
   onClick: noop,
   disabled: false,
+  className: '',
 };
 
 export default Button;

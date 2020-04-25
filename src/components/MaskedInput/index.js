@@ -14,17 +14,20 @@ const MaskedInput = ({
   mask,
   onChange,
   value,
+  name,
   ...rest
 }: Props) => {
   return (
     <InputMask
+      {...rest}
       className="input"
       onChange={onChange}
       value={value}
       mask={mask}
+      name={name}
     >
       {/* $FlowFixMe  */ }
-      {() => <Input {...rest} />}
+      {(props) => <Input {...props} />}
     </InputMask>
   );
 };

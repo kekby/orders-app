@@ -10,11 +10,9 @@ const store = configureStore();
 const MOUNT_NODE = document.getElementById('root');
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   MOUNT_NODE,
 );
 

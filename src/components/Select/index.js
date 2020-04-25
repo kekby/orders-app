@@ -16,14 +16,16 @@ type SelectProps = {
   error?: boolean,
   placeholder?: string,
   onChange?: (SyntheticInputEvent<HTMLSelectElement>) => void,
-  value?: string
+  value?: string,
+  name?: string,
+  className?: string
 }
 
 const Select = ({
-  options, error, placeholder, onChange, value,
+  options, error, placeholder, onChange, value, name, className,
 }: SelectProps) => {
   return (
-    <div className="select">
+    <div className={cx('select', className)}>
       <select
         className={cx('input', 'select__input', {
           select__input_empty: !value,
@@ -31,6 +33,7 @@ const Select = ({
         })}
         onChange={onChange}
         value={value}
+        name={name}
       >
         <option value="" disabled default>{placeholder}</option>
         {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -46,7 +49,9 @@ Select.defaultProps = {
   error: false,
   onChange: noop,
   value: '',
+  name: '',
   placeholder: 'Select your option',
+  className: '',
 };
 
 export default Select;

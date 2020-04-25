@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // @flow
 
 import React from 'react';
@@ -9,18 +10,20 @@ export type InputProps = {
   onChange: (SyntheticInputEvent<HTMLInputElement>) => void,
   placeholder?: string,
   error?: boolean,
-  name?: string
+  name?: string,
+  className?: string
 }
 
 const Input = ({
-  value, placeholder, onChange, error, name,
+  value, placeholder, onChange, error, name, className, ...rest
 }: InputProps) => {
   return (
     <input
+      {...rest}
       name={name}
       className={cx('input', {
         input_error: error,
-      })}
+      }, className)}
       placeholder={placeholder}
       onChange={onChange}
       value={value}
@@ -32,6 +35,7 @@ Input.defaultProps = {
   placeholder: '',
   error: false,
   name: '',
+  className: '',
 };
 
 export default Input;
