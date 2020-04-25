@@ -1,11 +1,23 @@
 // @flow
 
 import React from 'react';
+import Container from 'components/Container';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
-const App = () => (
-  <div className="App">
-    here is the app
-  </div>
-);
-
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <Container>
+        <Switch>
+          <Route exact path="/">
+            here i am
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
+  );
+}
