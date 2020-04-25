@@ -1,12 +1,8 @@
 // @flow
 import type { Saga } from 'redux-saga';
-import { all } from 'redux-saga/effects';
-
-// sagas
-// import exampleSaga from './Example/sagas.js';
+import { fork } from 'redux-saga/effects';
+import getCitiesSaga from './app/sagas/getCities';
 
 export default function* root(): Saga<void> {
-  yield all([
-    // exampleSaga(),
-  ]);
+  yield fork(getCitiesSaga);
 }

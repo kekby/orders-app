@@ -1,10 +1,11 @@
 // @flow
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import type { Order } from 'entities';
 import { createOrder } from 'store/orders/actions';
+import { getCities } from 'store/app/actions';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
 import Select from 'components/Select';
@@ -18,6 +19,11 @@ const options = [
 
 const CreateOrder = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCities());
+  }, []);
+
   const formik = useFormik<Order>({
     initialValues: {
       city: '',

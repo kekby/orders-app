@@ -7,7 +7,8 @@ module.exports = {
   parser: 'babel-eslint',
   rules: {
     'react/jsx-filename-extension': 0,
-    'arrow-body-style': 0
+    'arrow-body-style': 0,
+    'react-hooks/exhaustive-deps': 0
   },
   overrides: [
     {
