@@ -2,20 +2,16 @@
 
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { Order } from 'entities';
 import { createOrder } from 'store/orders/actions';
-import { getCities } from 'store/app/actions';
+import { getCities, getTimeSlots } from 'store/app/actions';
+import { citiesOptionsSelector, citySelector } from 'store/app/selectors';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
 import Select from 'components/Select';
 import Button from 'components/Button';
 import './styles.scss';
-
-const options = [
-  { label: 'New York', value: 'newyork' },
-  { label: 'Moscow', value: 'moscow' },
-];
 
 const CreateOrder = () => {
   const dispatch = useDispatch();
@@ -39,8 +35,21 @@ const CreateOrder = () => {
     })),
   });
 
-
   const { values } = formik;
+  const cities = useSelector(citiesOptionsSelector);
+  const city = useSelector(citySelector);
+
+  useEffect(() => {
+    if (values.city) {
+      dispatch(getTimeSlots(values.city));
+    }
+  }, [values.city]);
+
+  useEffect(() => {
+    if (city) {
+      formik.setFieldValue('city', city);
+    }
+  }, [city]);
 
   return (
     <div className="create-order">
@@ -51,7 +60,7 @@ const CreateOrder = () => {
             name="city"
             onChange={formik.handleChange}
             value={values.city}
-            options={options}
+            options={cities}
             placeholder="Выберите город:"
           />
         </div>
@@ -61,7 +70,7 @@ const CreateOrder = () => {
               name="date"
               onChange={formik.handleChange}
               value={values.date}
-              options={options}
+              options={[]}
               placeholder="Дата:"
             />
           </div>
@@ -70,7 +79,7 @@ const CreateOrder = () => {
               name="time"
               onChange={formik.handleChange}
               value={values.time}
-              options={options}
+              options={[]}
               placeholder="Время:"
             />
           </div>

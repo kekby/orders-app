@@ -13,5 +13,12 @@ export type StatusState = {|
 |}
 
 export type AppState = {|
-  cities: City[]
+  cities: City[],
+  selectedCity: ?string
 |}
+
+export type State = {
+  orders: OrderState,
+  status: StatusState,
+  app: AppState
+}

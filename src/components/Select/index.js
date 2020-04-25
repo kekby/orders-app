@@ -6,7 +6,7 @@ import noop from 'lodash.noop';
 import arrow from './arrow.png';
 import './styles.scss';
 
-type Option = {|
+export type Option = {|
   label: string,
   value: string
 |}

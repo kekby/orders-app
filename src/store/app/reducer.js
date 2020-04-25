@@ -4,6 +4,7 @@ import type { AppAction } from './actions';
 
 const initialState = {
   cities: [],
+  selectedCity: null,
 };
 
 export default (state: AppState = initialState, action: AppAction): AppState => {
@@ -12,6 +13,13 @@ export default (state: AppState = initialState, action: AppAction): AppState => 
       return {
         ...state,
         cities: action.payload,
+      };
+    }
+
+    case 'GET_TIME_SLOTS': {
+      return {
+        ...state,
+        selectedCity: action.payload,
       };
     }
     default:
