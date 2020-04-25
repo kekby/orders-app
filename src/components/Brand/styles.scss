@@ -1,3 +1,9 @@
+.brand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .brand__logo {
   width: 150px;
   img {

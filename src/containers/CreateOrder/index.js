@@ -21,6 +21,8 @@ const CreateOrder = () => {
   const getCitiesStatus = useSelector(getCitiesStatusSelector);
   const getTimeSlotsStatus = useSelector(getTimeSlotsStatusSelector);
 
+  const isLoading = getCitiesStatus === 'REQUEST' || getTimeSlotsStatus === 'REQUEST';
+
   useEffect(() => {
     dispatch(getCities());
   }, [dispatch]);
@@ -58,7 +60,7 @@ const CreateOrder = () => {
 
   return (
     <>
-      <Brand className="mt-3 mb-2" />
+      <Brand isLoading={isLoading} className="mt-3 mb-2" />
       <div className="create-order">
         <h1 className="title mb-3">Онлайн запись</h1>
         <Muted active={getCitiesStatus === 'REQUEST'}>

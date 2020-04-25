@@ -9,3 +9,4 @@ export default {
 };
 
 export const Default = () => <Brand />;
+export const Loading = () => <Brand isLoading />;
