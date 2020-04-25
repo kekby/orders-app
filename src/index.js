@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from 'store/configureStore';
 import './index.scss';
 import App from 'containers/App';
 import * as serviceWorker from './serviceWorker';
 
+const store = configureStore();
+const MOUNT_NODE = document.getElementById('root');
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  MOUNT_NODE,
 );
 
 // If you want your app to work offline and load faster, you can change
