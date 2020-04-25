@@ -21,6 +21,11 @@
 .select__input {
   appearance: none;
 
+  option {
+    background: #fff;
+    color: #000;
+  }
+
   &_empty {
     color: $grey-800;
   }
