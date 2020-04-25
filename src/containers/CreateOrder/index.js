@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import type { Order } from 'entities';
+import { createOrder } from 'store/orders/actions';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
 import Select from 'components/Select';
@@ -13,16 +16,9 @@ const options = [
   { label: 'Moscow', value: 'moscow' },
 ];
 
-type CreateOrderForm = {
-  city: string,
-  phone: string,
-  name: string,
-  date: string,
-  time: string
-}
-
 const CreateOrder = () => {
-  const formik = useFormik<CreateOrderForm>({
+  const dispatch = useDispatch();
+  const formik = useFormik<Order>({
     initialValues: {
       city: '',
       phone: '',
@@ -31,7 +27,10 @@ const CreateOrder = () => {
       time: '',
     },
 
-    onSubmit: console.log,
+    onSubmit: (values) => dispatch(createOrder({
+      ...values,
+      phone: values.phone.replace(/\D/g, ''),
+    })),
   });
 
 
