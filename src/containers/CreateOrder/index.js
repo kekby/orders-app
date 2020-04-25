@@ -7,6 +7,7 @@ import type { Order } from 'entities';
 import { createOrder } from 'store/orders/actions';
 import { getCities, getTimeSlots } from 'store/app/actions';
 import { citiesOptionsSelector, citySelector } from 'store/app/selectors';
+import { getCitiesStatusSelector, getTimeSlotsStatusSelector } from 'store/status/selectors';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
 import Select from 'components/Select';
@@ -17,6 +18,8 @@ import './styles.scss';
 
 const CreateOrder = () => {
   const dispatch = useDispatch();
+  const getCitiesStatus = useSelector(getCitiesStatusSelector);
+  const getTimeSlotsStatus = useSelector(getTimeSlotsStatusSelector);
 
   useEffect(() => {
     dispatch(getCities());
@@ -58,7 +61,7 @@ const CreateOrder = () => {
       <Brand className="mt-3 mb-2" />
       <div className="create-order">
         <h1 className="title mb-3">Онлайн запись</h1>
-        <Muted active>
+        <Muted active={getCitiesStatus === 'REQUEST'}>
           <form className="form">
             <div className="form__row mb-2">
               <Select
@@ -69,26 +72,28 @@ const CreateOrder = () => {
                 placeholder="Выберите город:"
               />
             </div>
-            <div className="form__row mb-2">
-              <div className="form__column mr-1">
-                <Select
-                  name="date"
-                  onChange={formik.handleChange}
-                  value={values.date}
-                  options={[]}
-                  placeholder="Дата:"
-                />
+            <Muted active={getTimeSlotsStatus === 'REQUEST'}>
+              <div className="form__row mb-2">
+                <div className="form__column mr-1">
+                  <Select
+                    name="date"
+                    onChange={formik.handleChange}
+                    value={values.date}
+                    options={[]}
+                    placeholder="Дата:"
+                  />
+                </div>
+                <div className="form__column">
+                  <Select
+                    name="time"
+                    onChange={formik.handleChange}
+                    value={values.time}
+                    options={[]}
+                    placeholder="Время:"
+                  />
+                </div>
               </div>
-              <div className="form__column">
-                <Select
-                  name="time"
-                  onChange={formik.handleChange}
-                  value={values.time}
-                  options={[]}
-                  placeholder="Время:"
-                />
-              </div>
-            </div>
+            </Muted>
             <div className="form__row mb-2">
               <MaskedInput
                 mask="+7 (999) 999-99-99"

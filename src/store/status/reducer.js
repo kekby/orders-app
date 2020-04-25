@@ -4,6 +4,7 @@ import type { Action } from './action';
 
 const initialState = {
   GET_CITIES: 'INIT',
+  GET_TIME_SLOTS: 'INIT',
 };
 
 export default (state: StatusState = initialState, action: Action): StatusState => {

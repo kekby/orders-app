@@ -9,7 +9,8 @@ export type OrderState = {
 }
 
 export type StatusState = {|
-  GET_CITIES: Status
+  GET_CITIES: Status,
+  GET_TIME_SLOTS: Status
 |}
 
 export type AppState = {|
