@@ -1,5 +1,5 @@
 // @flow
-import type { Order } from 'entities';
+import type { Order } from 'types';
 
 export type CreateOrderAction = { type: "CREATE_ORDER", payload: Order }
 

@@ -1,9 +1,10 @@
 // @flow
-import type { AppState } from 'entities';
+import type { AppState } from 'types';
 import type { AppAction } from './actions';
 
 const initialState = {
   cities: [],
+  slots: null,
   selectedCity: null,
 };
 
@@ -20,6 +21,13 @@ export default (state: AppState = initialState, action: AppAction): AppState => 
       return {
         ...state,
         selectedCity: action.payload,
+      };
+    }
+
+    case 'GET_TIME_SLOTS_SUCCESS': {
+      return {
+        ...state,
+        slots: action.payload,
       };
     }
     default:

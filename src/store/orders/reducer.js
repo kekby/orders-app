@@ -1,5 +1,5 @@
 // @flow
-import type { OrderState } from 'entities';
+import type { OrderState } from 'types';
 import type { Action } from './actions';
 
 const initialState = {

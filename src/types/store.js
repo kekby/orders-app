@@ -1,6 +1,6 @@
 // @flow
 import type { Order } from './order';
-import type { City } from './app';
+import type { City, TimeSlotsRes } from './app';
 
 export type Status = "REQUEST" | "SUCCESS" | "FAILURE" | "INIT"
 
@@ -15,7 +15,8 @@ export type StatusState = {|
 
 export type AppState = {|
   cities: City[],
-  selectedCity: ?string
+  selectedCity: ?string,
+  slots: ?TimeSlotsRes
 |}
 
 export type State = {

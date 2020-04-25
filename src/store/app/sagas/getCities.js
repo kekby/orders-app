@@ -3,7 +3,7 @@ import {
   takeLatest, put, call,
 } from 'redux-saga/effects';
 import type { Saga } from 'redux-saga';
-import type { City } from 'entities';
+import type { City } from 'types';
 import assign from 'store/status/assignStatus';
 import { type GetCitiesAction, getTimeSlots } from 'store/app/actions';
 import api from 'api';

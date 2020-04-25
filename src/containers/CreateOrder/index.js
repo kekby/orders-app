@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import type { Order } from 'entities';
+import type { Order } from 'types';
 import { createOrder } from 'store/orders/actions';
 import { getCities, getTimeSlots } from 'store/app/actions';
 import { citiesOptionsSelector, citySelector } from 'store/app/selectors';

@@ -1,5 +1,5 @@
 // @flow
-import type { StatusState } from 'entities';
+import type { StatusState } from 'types';
 import type { Action } from './action';
 
 const initialState = {
