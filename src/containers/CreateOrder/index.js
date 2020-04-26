@@ -1,7 +1,7 @@
 // @flow
 
 import React, {
-  useEffect, useState,
+  useEffect, useState, useRef,
 } from 'react';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
@@ -30,6 +30,7 @@ const CreateOrder = () => {
   const getCitiesStatus = useSelector(getCitiesStatusSelector);
   const getTimeSlotsStatus = useSelector(getTimeSlotsStatusSelector);
   const [isNotificationVisible, setNotificationVisibility] = useState<boolean>(false);
+  const buttonRef = useRef(null);
 
   const isLoading = getCitiesStatus === 'REQUEST' || getTimeSlotsStatus === 'REQUEST';
   const cityId = useSelector(cityIdSelector);
@@ -47,6 +48,11 @@ const CreateOrder = () => {
     },
 
     onSubmit: (values, helpers) => {
+      // инпуты форм не теряют фокус после нажатия кнопки Enter
+      // довольно грубое решение, но по крайней мере оно работает
+      if (buttonRef.current) {
+        buttonRef.current.focus();
+      }
       dispatch(createOrder({
         ...values,
         phone: getPhoneRawValue(values.phone),
@@ -86,7 +92,7 @@ const CreateOrder = () => {
   });
 
   const {
-    values, errors, touched, dirty,
+    values, errors, touched,
   } = formik;
   const cities = useSelector(citiesOptionsSelector);
   const city = useSelector(citySelector);
@@ -117,7 +123,6 @@ const CreateOrder = () => {
   }, [values.date]);
 
   const getError = (field: string): string => {
-    if (!dirty) return '';
     return touched[field] && errors[field] ? errors[field] : '';
   };
 
@@ -213,6 +218,8 @@ const CreateOrder = () => {
               <Button
                 type="submit"
                 className="centered"
+                ref={buttonRef}
+                onClick={formik.handleSubmit}
               >
                 Записаться
               </Button>

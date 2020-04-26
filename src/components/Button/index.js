@@ -14,15 +14,16 @@ type ButtonProps = {
   className?: string
 }
 
-const Button = ({
+const Button = React.forwardRef<ButtonProps, HTMLElement>(({
   children,
   type = 'button',
   onClick,
   disabled,
   className,
-}: ButtonProps) => {
+}: ButtonProps, ref) => {
   return (
     <button
+      ref={ref}
       type={type}
       onClick={onClick}
       className={cx('button', className)}
@@ -31,8 +32,9 @@ const Button = ({
       {children}
     </button>
   );
-};
+});
 
+// $FlowFixMe
 Button.defaultProps = {
   type: 'button',
   onClick: noop,
