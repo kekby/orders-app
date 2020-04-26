@@ -19,6 +19,8 @@ import Brand from 'components/Brand';
 import Muted from 'components/Muted';
 import './styles.scss';
 
+const getPhoneRawValue = (phone: string) => phone.replace(/\D/g, '');
+
 const CreateOrder = () => {
   const dispatch = useDispatch();
   const getCitiesStatus = useSelector(getCitiesStatusSelector);
@@ -41,11 +43,36 @@ const CreateOrder = () => {
 
     onSubmit: (values) => dispatch(createOrder({
       ...values,
-      phone: values.phone.replace(/\D/g, ''),
+      phone: getPhoneRawValue(values.phone),
     })),
+
+    validate: (values) => {
+      const errors = {};
+
+      if (!values.city) {
+        errors.city = 'Выберите город';
+      }
+
+      if (!values.date) {
+        errors.date = 'Пожалуйста, выберите дату';
+      } else if (!values.time) {
+        errors.time = 'Пожалуйста, выберите время';
+      }
+
+      if (getPhoneRawValue(values.phone).length !== 11) {
+        errors.phone = 'Пожалуйста, введите корректный телефон, иначе наши специалисты не смогут связаться с вами';
+      }
+
+      if (!values.name) {
+        errors.name = 'Пожалуйста, укажите имя';
+      }
+
+      return errors;
+    },
+    validateOnChange: false,
   });
 
-  const { values } = formik;
+  const { values, errors, touched } = formik;
   const cities = useSelector(citiesOptionsSelector);
   const cityId = useSelector(cityIdSelector);
   const city = useSelector(citySelector);
@@ -85,6 +112,7 @@ const CreateOrder = () => {
                 value={values.city}
                 options={cities}
                 placeholder="Выберите город:"
+                error={errors.city || ''}
               />
             </div>
             {city && (
@@ -113,6 +141,8 @@ const CreateOrder = () => {
                     value={values.date}
                     options={days}
                     placeholder="Дата:"
+                    error={touched.date && errors.date ? errors.date : ''}
+                    onBlur={formik.handleBlur}
                   />
                 </div>
                 <div className="form__column">
@@ -121,6 +151,8 @@ const CreateOrder = () => {
                     onChange={formik.handleChange}
                     value={values.time}
                     options={timeSlots}
+                    error={touched.time && errors.time ? errors.time : ''}
+                    onBlur={formik.handleBlur}
                     placeholder={timeSlots.length === 0 ? 'Выберите дату' : 'Время:'}
                   />
                 </div>
@@ -133,6 +165,8 @@ const CreateOrder = () => {
                 name="phone"
                 value={values.phone}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={touched.phone && errors.phone ? errors.phone : ''}
               />
             </div>
             <div className="form__row mb-3">
@@ -141,6 +175,8 @@ const CreateOrder = () => {
                 value={values.name}
                 onChange={formik.handleChange}
                 placeholder="Ваше имя"
+                error={touched.name && errors.name ? errors.name : ''}
+                onBlur={formik.handleBlur}
               />
             </div>
             <div className="form__row">

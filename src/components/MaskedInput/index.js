@@ -20,7 +20,6 @@ const MaskedInput = ({
   return (
     <InputMask
       {...rest}
-      className="input"
       onChange={onChange}
       value={value}
       mask={mask}

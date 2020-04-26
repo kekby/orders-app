@@ -16,4 +16,4 @@ const options = [
 
 export const Default = () => <Select onChange={action('change!')} options={options} />;
 export const WithSelected = () => <Select onChange={action('change!')} value="1" options={options} />;
-export const WithError = () => <Select onChange={action('change!')} error options={options} />;
+export const WithError = () => <Select onChange={action('change!')} error="some error" options={options} />;

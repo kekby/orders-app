@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // @flow
 
 import React from 'react';
@@ -13,7 +14,7 @@ export type Option = {|
 
 type SelectProps = {
   options: Option[],
-  error?: boolean,
+  error?: string,
   placeholder?: string,
   onChange?: (SyntheticInputEvent<HTMLSelectElement>) => void,
   value?: string,
@@ -22,31 +23,37 @@ type SelectProps = {
 }
 
 const Select = ({
-  options, error, placeholder, onChange, value, name, className,
+  options, error, placeholder, onChange, value, name, className, ...rest
 }: SelectProps) => {
   return (
     <div className={cx('select', className)}>
-      <select
-        className={cx('input', 'select__input', {
-          select__input_empty: !value,
-          input_error: error,
-        })}
-        onChange={onChange}
-        value={value}
-        name={name}
-      >
-        <option value="" disabled default>{placeholder}</option>
-        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-      </select>
-      <div className="select__arrow">
-        <img src={arrow} alt="show options" />
+      <div className="select__field">
+        <select
+          {...rest}
+          className={cx('input__field', 'select__input', {
+            select_empty_value: !value,
+            input__field_error: error,
+          })}
+          onChange={onChange}
+          value={value}
+          name={name}
+        >
+          <option value="" disabled default>{placeholder}</option>
+          {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+        <div className="select__arrow">
+          <img src={arrow} alt="show options" />
+        </div>
       </div>
+      {error && (
+        <p className="input__error">{error}</p>
+      )}
     </div>
   );
 };
 
 Select.defaultProps = {
-  error: false,
+  error: '',
   onChange: noop,
   value: '',
   name: '',

@@ -9,31 +9,36 @@ export type InputProps = {
   value: string,
   onChange: (SyntheticInputEvent<HTMLInputElement>) => void,
   placeholder?: string,
-  error?: boolean,
+  error?: string,
   name?: string,
-  className?: string
+  className?: string,
 }
 
 const Input = ({
   value, placeholder, onChange, error, name, className, ...rest
 }: InputProps) => {
   return (
-    <input
-      {...rest}
-      name={name}
-      className={cx('input', {
-        input_error: error,
-      }, className)}
-      placeholder={placeholder}
-      onChange={onChange}
-      value={value}
-    />
+    <div className="input">
+      <input
+        {...rest}
+        name={name}
+        className={cx('input__field', {
+          input__field_error: !!error,
+        }, className)}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+      />
+      {error && (
+        <p className="input__error">{error}</p>
+      )}
+    </div>
   );
 };
 
 Input.defaultProps = {
   placeholder: '',
-  error: false,
+  error: '',
   name: '',
   className: '',
 };

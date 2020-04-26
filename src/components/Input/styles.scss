@@ -2,6 +2,12 @@
 @import "../../assets/variables.scss";
 
 .input {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input__field {
   border-radius: 2px;
   padding: 12px 14px;
   font-size: inherit;
@@ -33,4 +39,10 @@
       box-shadow: none;
     }
   }
+}
+
+.input__error {
+  color: $danger-color;
+  font-size: 12px;
+  margin-top: 0.5rem;
 }
