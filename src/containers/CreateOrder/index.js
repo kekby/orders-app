@@ -41,10 +41,13 @@ const CreateOrder = () => {
       time: '',
     },
 
-    onSubmit: (values) => dispatch(createOrder({
-      ...values,
-      phone: getPhoneRawValue(values.phone),
-    })),
+    onSubmit: (values, helpers) => {
+      dispatch(createOrder({
+        ...values,
+        phone: getPhoneRawValue(values.phone),
+      }));
+      helpers.resetForm();
+    },
 
     validate: (values) => {
       const errors = {};

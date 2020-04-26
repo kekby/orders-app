@@ -7,5 +7,6 @@ export const createOrder = (order: Order): CreateOrderAction => ({
   type: 'CREATE_ORDER',
   payload: order,
 });
+
 export type Action =
   | CreateOrderAction

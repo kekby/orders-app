@@ -46,7 +46,7 @@ export const timeOptionsSelector = createSelector<State, *, Option[], TimeSlotsR
     return Object.keys(timeSlots)
       .filter((k) => !timeSlots[k].is_not_free)
       .map((t) => ({
-        label: timeSlots[t].begin,
+        label: `${timeSlots[t].begin}-${timeSlots[t].end}`,
         value: timeSlots[t].date,
       }));
   },
