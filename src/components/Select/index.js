@@ -31,7 +31,7 @@ const Select = ({
         <select
           {...rest}
           className={cx('input__field', 'select__input', {
-            select_empty_value: !value,
+            select__input_empty_value: !value,
             input__field_error: error,
           })}
           onChange={onChange}
