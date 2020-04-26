@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { Order } from 'types';
 import { createOrder } from 'store/orders/actions';
 import { getCities, getTimeSlots } from 'store/app/actions';
-import { citiesOptionsSelector, citySelector } from 'store/app/selectors';
+import { citiesOptionsSelector, citySelector, daysSelector } from 'store/app/selectors';
 import { getCitiesStatusSelector, getTimeSlotsStatusSelector } from 'store/status/selectors';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
@@ -45,6 +45,7 @@ const CreateOrder = () => {
   const { values } = formik;
   const cities = useSelector(citiesOptionsSelector);
   const city = useSelector(citySelector);
+  const days = useSelector(daysSelector);
 
   useEffect(() => {
     if (values.city) {
@@ -81,7 +82,7 @@ const CreateOrder = () => {
                     name="date"
                     onChange={formik.handleChange}
                     value={values.date}
-                    options={[]}
+                    options={days}
                     placeholder="Дата:"
                   />
                 </div>
