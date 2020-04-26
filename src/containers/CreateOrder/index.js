@@ -1,7 +1,8 @@
 // @flow
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Order } from 'types';
 import { formatPrice, formatPhoneNumber } from 'utils';
@@ -26,8 +27,13 @@ const CreateOrder = () => {
   const dispatch = useDispatch();
   const getCitiesStatus = useSelector(getCitiesStatusSelector);
   const getTimeSlotsStatus = useSelector(getTimeSlotsStatusSelector);
+  const [isNotificationVisible, setNotificationVisibility] = useState<boolean>(false);
 
   const isLoading = getCitiesStatus === 'REQUEST' || getTimeSlotsStatus === 'REQUEST';
+  const cityId = useSelector(cityIdSelector);
+  const defaultCityId = useMemo(() => {
+    return cityId;
+  }, []);
 
   useEffect(() => {
     dispatch(getCities());
@@ -35,7 +41,7 @@ const CreateOrder = () => {
 
   const formik = useFormik<Order>({
     initialValues: {
-      city: '',
+      city: defaultCityId,
       phone: '',
       name: '',
       date: '',
@@ -48,8 +54,10 @@ const CreateOrder = () => {
         phone: getPhoneRawValue(values.phone),
         id: shortId.generate(),
       }));
+      setNotificationVisibility(true);
+      Object.keys(values).forEach((field) => helpers.setFieldTouched(field, false, false));
+      helpers.setStatus();
       helpers.resetForm();
-      Object.keys(values).forEach((field) => helpers.setFieldTouched(field, false));
     },
 
     validate: (values) => {
@@ -61,7 +69,9 @@ const CreateOrder = () => {
 
       if (!values.date) {
         errors.date = 'Пожалуйста, выберите дату';
-      } else if (!values.time) {
+      }
+
+      if (!values.time) {
         errors.time = 'Пожалуйста, выберите время';
       }
 
@@ -78,9 +88,10 @@ const CreateOrder = () => {
     validateOnChange: false,
   });
 
-  const { values, errors, touched } = formik;
+  const {
+    values, errors, touched, dirty,
+  } = formik;
   const cities = useSelector(citiesOptionsSelector);
-  const cityId = useSelector(cityIdSelector);
   const city = useSelector(citySelector);
   const days = useSelector(dayOptionsSelector);
   const timeSlots = useSelector(timeOptionsSelector);
@@ -88,6 +99,10 @@ const CreateOrder = () => {
   useEffect(() => {
     if (values.city) {
       dispatch(getTimeSlots(values.city));
+      ['date', 'time'].forEach((field) => {
+        formik.setFieldValue(field, '', false);
+        formik.setFieldTouched(field, false, false);
+      });
     }
   }, [values.city]);
 
@@ -104,13 +119,25 @@ const CreateOrder = () => {
     }
   }, [values.date]);
 
+  const getError = (field: string): string => {
+    if (!dirty) return '';
+    return touched[field] && errors[field] ? errors[field] : '';
+  };
+
   return (
     <>
       <Brand isLoading={isLoading} className="mt-3 mb-2" />
       <div className="create-order">
         <h1 className="title mb-3">Онлайн запись</h1>
+        {isNotificationVisible && (
+          <p className="notification mt-1 mb-1">
+            Запись создана.
+          </p>
+        )}
+        <Link to="/orders" className="mb-2">Посмотреть все записи</Link>
+
         <Muted active={getCitiesStatus === 'REQUEST'}>
-          <form className="form mb-2">
+          <form className="form mb-2" onSubmit={formik.handleSubmit}>
             <div className="form__row mb-2">
               <Select
                 name="city"
@@ -118,7 +145,7 @@ const CreateOrder = () => {
                 value={values.city}
                 options={cities}
                 placeholder="Выберите город:"
-                error={touched.city && errors.city ? errors.city : ''}
+                error={getError('city')}
               />
             </div>
             {city && (
@@ -147,7 +174,7 @@ const CreateOrder = () => {
                     value={values.date}
                     options={days}
                     placeholder="Дата:"
-                    error={touched.date && errors.date ? errors.date : ''}
+                    error={getError('date')}
                     onBlur={formik.handleBlur}
                   />
                 </div>
@@ -157,7 +184,7 @@ const CreateOrder = () => {
                     onChange={formik.handleChange}
                     value={values.time}
                     options={timeSlots}
-                    error={touched.time && errors.time ? errors.time : ''}
+                    error={getError('time')}
                     onBlur={formik.handleBlur}
                     placeholder={timeSlots.length === 0 ? 'Выберите дату' : 'Время:'}
                   />
@@ -171,8 +198,7 @@ const CreateOrder = () => {
                 name="phone"
                 value={values.phone}
                 onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={touched.phone && errors.phone ? errors.phone : ''}
+                onBlur={getError('phone')}
               />
             </div>
             <div className="form__row mb-3">
@@ -181,7 +207,7 @@ const CreateOrder = () => {
                 value={values.name}
                 onChange={formik.handleChange}
                 placeholder="Ваше имя"
-                error={touched.name && errors.name ? errors.name : ''}
+                error={getError('name')}
                 onBlur={formik.handleBlur}
               />
             </div>
@@ -189,7 +215,6 @@ const CreateOrder = () => {
               <Button
                 type="submit"
                 className="centered"
-                onClick={formik.handleSubmit}
               >
                 Записаться
               </Button>
