@@ -8,6 +8,7 @@ import rootSaga from './rootSaga';
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['orders'],
 };
 
 export default function configureStore(initialState = {}) {

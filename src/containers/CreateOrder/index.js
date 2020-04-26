@@ -1,6 +1,8 @@
 // @flow
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, {
+  useEffect, useState,
+} from 'react';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,17 +33,13 @@ const CreateOrder = () => {
 
   const isLoading = getCitiesStatus === 'REQUEST' || getTimeSlotsStatus === 'REQUEST';
   const cityId = useSelector(cityIdSelector);
-  const defaultCityId = useMemo(() => {
-    return cityId;
-  }, []);
-
   useEffect(() => {
     dispatch(getCities());
   }, [dispatch]);
 
   const formik = useFormik<Order>({
     initialValues: {
-      city: defaultCityId,
+      city: cityId,
       phone: '',
       name: '',
       date: '',
@@ -56,7 +54,6 @@ const CreateOrder = () => {
       }));
       setNotificationVisibility(true);
       Object.keys(values).forEach((field) => helpers.setFieldTouched(field, false, false));
-      helpers.setStatus();
       helpers.resetForm();
     },
 
@@ -198,7 +195,8 @@ const CreateOrder = () => {
                 name="phone"
                 value={values.phone}
                 onChange={formik.handleChange}
-                onBlur={getError('phone')}
+                onBlur={formik.handleBlur}
+                error={getError('phone')}
               />
             </div>
             <div className="form__row mb-3">
