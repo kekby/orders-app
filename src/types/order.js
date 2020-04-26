@@ -5,5 +5,6 @@ export type Order = {
   phone: string,
   name: string,
   date: string,
-  time: string
+  time: string,
+  id: string
 }

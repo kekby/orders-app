@@ -15,6 +15,13 @@ export default (state: OrderState = initialState, action: Action): OrderState =>
       };
     }
 
+    case 'DELETE_ORDER': {
+      return {
+        ...state,
+        list: state.list.filter((order) => order.id !== action.payload),
+      };
+    }
+
     default:
       return state;
   }

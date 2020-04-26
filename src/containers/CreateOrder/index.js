@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Order } from 'types';
 import { formatPrice, formatPhoneNumber } from 'utils';
+import shortId from 'shortid';
 import { createOrder } from 'store/orders/actions';
 import { getCities, getTimeSlots, selectDay } from 'store/app/actions';
 import {
@@ -45,8 +46,10 @@ const CreateOrder = () => {
       dispatch(createOrder({
         ...values,
         phone: getPhoneRawValue(values.phone),
+        id: shortId.generate(),
       }));
       helpers.resetForm();
+      Object.keys(values).forEach((field) => helpers.setFieldTouched(field, false));
     },
 
     validate: (values) => {
@@ -115,7 +118,7 @@ const CreateOrder = () => {
                 value={values.city}
                 options={cities}
                 placeholder="Выберите город:"
-                error={errors.city || ''}
+                error={touched.city && errors.city ? errors.city : ''}
               />
             </div>
             {city && (
