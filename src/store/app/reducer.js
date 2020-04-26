@@ -6,6 +6,7 @@ const initialState = {
   cities: [],
   slots: null,
   selectedCity: null,
+  selectedDay: null,
 };
 
 export default (state: AppState = initialState, action: AppAction): AppState => {
@@ -28,6 +29,13 @@ export default (state: AppState = initialState, action: AppAction): AppState => 
       return {
         ...state,
         slots: action.payload,
+      };
+    }
+
+    case 'SELECT_DAY': {
+      return {
+        ...state,
+        selectedDay: action.payload,
       };
     }
     default:

@@ -16,7 +16,8 @@ export type StatusState = {|
 export type AppState = {|
   cities: City[],
   selectedCity: ?string,
-  slots: ?TimeSlotsRes
+  slots: ?TimeSlotsRes,
+  selectedDay: ?string
 |}
 
 export type State = {

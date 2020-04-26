@@ -8,7 +8,7 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': 0,
     'arrow-body-style': 0,
-    'react-hooks/exhaustive-deps': 0
+    'react-hooks/exhaustive-deps': 0,
   },
   overrides: [
     {

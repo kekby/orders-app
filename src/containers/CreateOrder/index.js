@@ -4,9 +4,12 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import type { Order } from 'types';
+import { formatPrice, formatPhoneNumber } from 'utils';
 import { createOrder } from 'store/orders/actions';
-import { getCities, getTimeSlots } from 'store/app/actions';
-import { citiesOptionsSelector, citySelector, daysSelector } from 'store/app/selectors';
+import { getCities, getTimeSlots, selectDay } from 'store/app/actions';
+import {
+  citiesOptionsSelector, cityIdSelector, dayOptionsSelector, timeOptionsSelector, citySelector,
+} from 'store/app/selectors';
 import { getCitiesStatusSelector, getTimeSlotsStatusSelector } from 'store/status/selectors';
 import MaskedInput from 'components/MaskedInput';
 import Input from 'components/Input';
@@ -44,8 +47,10 @@ const CreateOrder = () => {
 
   const { values } = formik;
   const cities = useSelector(citiesOptionsSelector);
+  const cityId = useSelector(cityIdSelector);
   const city = useSelector(citySelector);
-  const days = useSelector(daysSelector);
+  const days = useSelector(dayOptionsSelector);
+  const timeSlots = useSelector(timeOptionsSelector);
 
   useEffect(() => {
     if (values.city) {
@@ -54,10 +59,17 @@ const CreateOrder = () => {
   }, [values.city]);
 
   useEffect(() => {
-    if (city) {
-      formik.setFieldValue('city', city);
+    if (cityId) {
+      formik.setFieldValue('city', cityId);
     }
-  }, [city]);
+  }, [cityId]);
+
+  useEffect(() => {
+    if (values.date) {
+      dispatch(selectDay(values.date));
+      formik.setFieldValue('time', '');
+    }
+  }, [values.date]);
 
   return (
     <>
@@ -65,7 +77,7 @@ const CreateOrder = () => {
       <div className="create-order">
         <h1 className="title mb-3">Онлайн запись</h1>
         <Muted active={getCitiesStatus === 'REQUEST'}>
-          <form className="form">
+          <form className="form mb-2">
             <div className="form__row mb-2">
               <Select
                 name="city"
@@ -75,6 +87,23 @@ const CreateOrder = () => {
                 placeholder="Выберите город:"
               />
             </div>
+            {city && (
+              <div className="city-info ml-2 mb-2">
+                <p>{city.address}</p>
+                <p>
+                  {city.phones.map((phone) => (
+                    <a href={`tel:${phone}`} key={phone}>
+                      {formatPhoneNumber(phone)}
+                    </a>
+                  ))}
+                </p>
+                <p>
+                  Стоимость услуги
+                  {' '}
+                  {formatPrice(city.price)}
+                </p>
+              </div>
+            )}
             <Muted active={getTimeSlotsStatus === 'REQUEST'}>
               <div className="form__row mb-2">
                 <div className="form__column mr-1">
@@ -91,7 +120,7 @@ const CreateOrder = () => {
                     name="time"
                     onChange={formik.handleChange}
                     value={values.time}
-                    options={[]}
+                    options={timeSlots}
                     placeholder="Время:"
                   />
                 </div>
@@ -125,6 +154,15 @@ const CreateOrder = () => {
             </div>
           </form>
         </Muted>
+        <p className="agreement">
+          Нажимая «Записаться», я выражаю свое согласие с обработкой
+          моих персональных данных в соответствии с принятой
+          {' '}
+          <a href="#agreement">политикой конфиденциальности </a>
+          и принимаю
+          {' '}
+          <a href="#license">пользовательское соглашение</a>
+        </p>
       </div>
     </>
   );

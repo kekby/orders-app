@@ -7,3 +7,23 @@
 .form__column {
   flex: 1;
 }
+
+.city-info {
+  font-size: 12px;
+  a {
+    display: inline-block;
+    margin-right: 4px;
+    position: relative;
+    &:after {
+      content: ',';
+      color: #000;
+    }
+  }
+
+  a:last-child {
+    margin-right: 0;
+    &:after {
+      content: ''
+    }
+  }
+}
