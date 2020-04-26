@@ -121,7 +121,7 @@ const CreateOrder = () => {
                     onChange={formik.handleChange}
                     value={values.time}
                     options={timeSlots}
-                    placeholder="Время:"
+                    placeholder={timeSlots.length === 0 ? 'Выберите дату' : 'Время:'}
                   />
                 </div>
               </div>

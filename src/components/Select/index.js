@@ -18,7 +18,7 @@ type SelectProps = {
   onChange?: (SyntheticInputEvent<HTMLSelectElement>) => void,
   value?: string,
   name?: string,
-  className?: string
+  className?: string,
 }
 
 const Select = ({
